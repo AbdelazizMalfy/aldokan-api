@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { controllers } from './controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { entities } from './entity';
+import { services } from './services';
 
 @Module({
   imports: [
@@ -18,14 +18,14 @@ import { entities } from './entity';
         username: config.get('DB_USERNAME'),
         password: config.get('DB_PASSWORD'),
         database: config.get('DB_NAME'),
-        entities: Object.values(entities),
+        entities,
         synchronize: config.get('DB_SYNCHRONIZE') === 'true', // Ensuring boolean value
       }),
       inject: [ConfigService],
     }),
-    // ... other modules
+    TypeOrmModule.forFeature(entities),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers,
+  providers: services,
 })
 export class AppModule {}

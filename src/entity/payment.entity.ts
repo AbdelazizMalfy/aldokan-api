@@ -10,7 +10,7 @@ import { OrderEntity } from './order.entity';
 @Entity()
 export class PaymentEntity {
   @PrimaryGeneratedColumn()
-  paymentID: number;
+  id: number;
 
   @OneToOne(() => OrderEntity)
   @JoinColumn()

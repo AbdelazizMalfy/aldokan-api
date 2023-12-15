@@ -5,7 +5,7 @@ import { ProductEntity } from './product.entity';
 @Entity()
 export class OrderDetailsEntity {
   @PrimaryGeneratedColumn()
-  orderDetailsID: number;
+  id: number;
 
   @ManyToOne(() => OrderEntity, (order) => order.orderDetails)
   order: OrderEntity;

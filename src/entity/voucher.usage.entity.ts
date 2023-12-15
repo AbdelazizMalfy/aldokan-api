@@ -6,7 +6,7 @@ import { VoucherEntity } from './voucher.entity';
 @Entity()
 export class VoucherUsageEntity {
   @PrimaryGeneratedColumn()
-  voucherUsageID: number;
+  id: number;
 
   @ManyToOne(() => VoucherEntity)
   voucher: VoucherEntity;

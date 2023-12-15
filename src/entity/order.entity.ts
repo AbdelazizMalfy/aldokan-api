@@ -11,7 +11,7 @@ import { OrderDetailsEntity } from './order.details.entity';
 @Entity()
 export class OrderEntity {
   @PrimaryGeneratedColumn()
-  orderID: number;
+  id: number;
 
   @ManyToOne(() => UserEntity, (user) => user.orders)
   user: UserEntity;

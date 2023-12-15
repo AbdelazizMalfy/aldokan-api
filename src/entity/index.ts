@@ -1,3 +1,4 @@
+import { CategoryEntity } from './category.entity';
 import { OrderDetailsEntity } from './order.details.entity';
 import { OrderEntity } from './order.entity';
 import { PaymentEntity } from './payment.entity';
@@ -16,4 +17,5 @@ export const entities = [
   VoucherEntity,
   VoucherUsageEntity,
   ProductImageEntity,
+  CategoryEntity,
 ];
