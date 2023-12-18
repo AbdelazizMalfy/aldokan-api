@@ -1,4 +1,3 @@
-import { entities } from 'src/entity';
 import { DataSource } from 'typeorm';
 
 export const AppDataSource = new DataSource({
@@ -8,7 +7,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
-  entities: entities,
-  migrations: ['./src/migrations/*.js'],
+  entities: ['dist/src/entity/*.entity.js'],
+  migrations: ['dist/src/migrations/*.js'],
   synchronize: false,
 });
