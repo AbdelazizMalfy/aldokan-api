@@ -6,7 +6,7 @@ import { AppModules } from 'src/app.modules';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // Make ConfigModule global (no need to import into other modules)
+      isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
       useFactory: (config: ConfigService) => ({
@@ -16,8 +16,9 @@ import { AppModules } from 'src/app.modules';
         username: config.get('DB_USERNAME'),
         password: config.get('DB_PASSWORD'),
         database: config.get('DB_NAME'),
-        entities: [],
+        entities: ['dist/src/**/entities/*.entity.js'],
         synchronize: config.get('DB_SYNCHRONIZE') === 'true', // Ensuring boolean value
+        // synchronize: false,
       }),
       inject: [ConfigService],
     }),

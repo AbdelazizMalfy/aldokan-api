@@ -6,7 +6,7 @@ import {
   IsString,
 } from 'class-validator';
 
-export enum UnitType {
+enum UnitType {
   ITEM = 'item',
   WEIGHT = 'weight',
 }
