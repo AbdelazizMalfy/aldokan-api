@@ -2,6 +2,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppModules } from 'src/app.modules';
+import { AuthModule } from './auth/auth.module';
+
+// const entitiesPath =
+//   process.env.NODE_ENV === 'production'
+//     ? 'dist/src/**/entities/*.entity.js'
+//     : 'src/**/entities/*.entity.ts';
 
 @Module({
   imports: [
@@ -16,12 +22,14 @@ import { AppModules } from 'src/app.modules';
         username: config.get('DB_USERNAME'),
         password: config.get('DB_PASSWORD'),
         database: config.get('DB_NAME'),
-        entities: [],
+        entities: ['dist/src/**/entities/*.entity.js'],
         synchronize: config.get('DB_SYNCHRONIZE') === 'true', // Ensuring boolean value
+        // synchronize: false,
       }),
       inject: [ConfigService],
     }),
     ...AppModules,
+    AuthModule,
   ],
 })
 export class AppModule {}

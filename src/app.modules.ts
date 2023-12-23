@@ -3,6 +3,7 @@ import { PaymentsModule } from 'src/payments/payments.module';
 import { ProductsModule } from 'src/products/products.module';
 import { UsersModule } from 'src/users/users.module';
 import { VouchersModule } from 'src/vouchers/vouchers.module';
+import { AuthModule } from './auth/auth.module';
 
 export const AppModules = [
   UsersModule,
@@ -10,4 +11,5 @@ export const AppModules = [
   ProductsModule,
   PaymentsModule,
   VouchersModule,
+  AuthModule,
 ];

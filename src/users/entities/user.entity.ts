@@ -13,8 +13,11 @@ export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 255, type: 'varchar' })
-  userName: string;
+  @Column({ length: 255 })
+  firstName: string;
+
+  @Column({ length: 255 })
+  lastName: string;
 
   @Column('text', { nullable: true })
   address: string;
@@ -22,8 +25,8 @@ export class UserEntity {
   @Column({ length: 255, unique: true })
   email: string;
 
-  @Column({ length: 255 })
-  password: string;
+  @Column({ nullable: true })
+  password?: string;
 
   @Column({ length: 15, nullable: true })
   phone: string;
@@ -33,6 +36,9 @@ export class UserEntity {
 
   @UpdateDateColumn()
   updated: Date;
+
+  @Column({ nullable: true })
+  refreshToken: string;
 
   @Column({
     type: 'enum',
