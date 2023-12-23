@@ -1,4 +1,5 @@
-import { JWTRtGuard } from './jwt.rt.guard';
-import { JWTGuard } from './jwt.guard';
+import { GoogleAuthGuard } from './google.auth.guard';
+import { AccessTokenGuard } from './jwt.guard';
+import { RefreshTokenGuard } from './jwt.rt.guard';
 
-export = [JWTRtGuard, JWTGuard];
+export = [AccessTokenGuard, RefreshTokenGuard, GoogleAuthGuard];

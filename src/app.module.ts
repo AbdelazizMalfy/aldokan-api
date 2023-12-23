@@ -2,17 +2,11 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppModules } from 'src/app.modules';
-import { AuthModule } from './auth/auth.module';
-
-// const entitiesPath =
-//   process.env.NODE_ENV === 'production'
-//     ? 'dist/src/**/entities/*.entity.js'
-//     : 'src/**/entities/*.entity.ts';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // Make ConfigModule global (no need to import into other modules)
+      isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
       useFactory: (config: ConfigService) => ({
@@ -29,7 +23,6 @@ import { AuthModule } from './auth/auth.module';
       inject: [ConfigService],
     }),
     ...AppModules,
-    AuthModule,
   ],
 })
 export class AppModule {}

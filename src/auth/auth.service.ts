@@ -8,13 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Tokens } from 'src/common/types/tokens';
 import { SignupDto } from './dto/signup.dto';
 import { ConfigService } from '@nestjs/config';
-
-export interface GoogleProfile {
-  email: string;
-  firstName: string;
-  lastName: string;
-  picture: string;
-}
+import { GoogleUser } from './strategies/google.strategy';
 
 @Injectable()
 export class AuthService {
@@ -79,7 +73,7 @@ export class AuthService {
     return true;
   }
 
-  async validateOAuthLogin(profile: GoogleProfile): Promise<Tokens> {
+  async validateOAuthLogin(profile: GoogleUser): Promise<Tokens> {
     // Here you would find or create a user in your database
     let user = await this.usersRepository.findOneBy({
       email: profile.email,
@@ -118,9 +112,7 @@ export class AuthService {
       throw new ForbiddenException('Access Denied');
     }
 
-    console.log('here');
     const tokens = await this.generateTokens(user.id, user.email);
-    console.log(tokens);
     await this.updateRefreshHash(user.id, tokens.refresh_token);
     return tokens;
   }
@@ -166,8 +158,6 @@ export class AuthService {
       ),
     ]);
 
-    console.log('access', accessToken);
-    console.log('refreshToken', refreshToken);
     return {
       access_token: accessToken,
       refresh_token: refreshToken,

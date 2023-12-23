@@ -11,7 +11,6 @@ export type JwtPayload = {
 @Injectable()
 export class JWTStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(config: ConfigService) {
-    console.log(config);
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
