@@ -82,7 +82,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-- **Your Name** - _Initial Development_ - [Abdelaziz Soliman](https://github.com/AbdelazizMalfy)
+_Initial Development_ - [Abdelaziz Soliman](https://github.com/AbdelazizMalfy)
 
 ## License
 

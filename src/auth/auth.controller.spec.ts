@@ -48,8 +48,6 @@ describe('AuthController', () => {
         lastName: 'lastName',
       };
 
-      console.log({ signupDto });
-
       mockAuthService.signup.mockResolvedValue(result);
       expect(await controller.signUp(signupDto)).toEqual(result);
       expect(mockAuthService.signup).toHaveBeenCalledWith(signupDto);
