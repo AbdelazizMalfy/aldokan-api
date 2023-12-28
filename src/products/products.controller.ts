@@ -49,7 +49,6 @@ export class ProductsController {
 
   @Post()
   async addProduct(@Body() product: CreateProductDto): Promise<ProductEntity> {
-    console.log(product.categoryId);
     const category = await this.categoriesService.getCategoryById(
       product.categoryId,
     );

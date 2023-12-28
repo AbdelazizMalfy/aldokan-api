@@ -44,7 +44,6 @@ export class CategoriesController {
   async addCategory(
     @Body() category: { name: string },
   ): Promise<CategoryEntity> {
-    console.log(category);
     return this.categoriesService.createCategory(category);
   }
 
