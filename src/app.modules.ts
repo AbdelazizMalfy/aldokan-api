@@ -4,6 +4,7 @@ import { ProductsModule } from 'src/products/products.module';
 import { UsersModule } from 'src/users/users.module';
 import { VouchersModule } from 'src/vouchers/vouchers.module';
 import { AuthModule } from './auth/auth.module';
+import { HealthzModule } from './healthz/healthz.module';
 
 export const AppModules = [
   UsersModule,
@@ -12,4 +13,5 @@ export const AppModules = [
   PaymentsModule,
   VouchersModule,
   AuthModule,
+  HealthzModule,
 ];
