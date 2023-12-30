@@ -7,7 +7,7 @@ defaults:
   run:
     shell: bash
     # Define the working directory for all run steps in the workflow
-    working-directory: /home/aldokan-user/aldokan
+    working-directory: ./aldokan/
 
 jobs:
 
