@@ -18,7 +18,6 @@ import { AppModules } from 'src/app.modules';
         database: config.get('DB_NAME'),
         entities: ['dist/src/**/entities/*.entity.js'],
         synchronize: config.get('DB_SYNCHRONIZE') === 'true', // Ensuring boolean value
-        // synchronize: false,
       }),
       inject: [ConfigService],
     }),
