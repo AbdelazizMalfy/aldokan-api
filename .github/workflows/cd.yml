@@ -23,11 +23,17 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
+            # Clone the project if it doesn't exist
+            if [ ! -d "aldokan" ]; then
+              git clone git@github.com:AbdelazizMalfy/aldokan.git
+            fi
+        
+            # Change directory to project
+            cd aldokan || exit
+
             # Pull the latest changes
             git pull origin main
 
-            # Change directory to project
-            cd aldokan || exit 
 
             # Start database and other services
             docker-compose up
