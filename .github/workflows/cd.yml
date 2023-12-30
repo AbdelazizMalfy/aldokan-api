@@ -37,7 +37,7 @@ jobs:
 
 
             # Start database and other services
-            docker-compose pull && docker-compose up -d
+            docker-compose up --build -d
 
             # Wait for the database to become ready
             echo "Waiting for DB to be ready..."
