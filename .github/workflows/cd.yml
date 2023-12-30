@@ -29,6 +29,14 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
+            # Print the current working directory
+            echo "Current directory:"
+            pwd
+
+            # List files in the current directory
+            echo "Listing files in the current directory:"
+            ls -la
+
             # Pull the latest changes
             git pull origin main
 
