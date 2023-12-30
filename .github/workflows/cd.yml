@@ -29,14 +29,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-            # Print the current working directory
-            echo "Current directory:"
-            pwd
-
-            # List files in the current directory
-            echo "Listing files in the current directory:"
-            ls -la
-
             $ Change directory
             cd aldokan/ || exit
 
@@ -45,7 +37,7 @@ jobs:
 
 
             # Start database and other services
-            docker-compose up -d
+            docker-compose pull && docker-compose up -d
 
             # Wait for the database to become ready
             echo "Waiting for DB to be ready..."
