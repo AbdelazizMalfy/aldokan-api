@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Deploying to server
         uses: appleboy/ssh-action@master
@@ -23,6 +25,9 @@ jobs:
           script: |
             # Pull the latest changes
             git pull origin main
+
+            # Change directory to project
+            cd aldokan || exit 
 
             # Start database and other services
             docker-compose up
