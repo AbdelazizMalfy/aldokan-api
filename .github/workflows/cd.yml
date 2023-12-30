@@ -3,6 +3,12 @@ name: Continuous Deployment Workflow
 on:
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+    # Define the working directory for all run steps in the workflow
+    working-directory: /home/aldokan-user/aldokan
+
 jobs:
 
   deploy:
@@ -23,14 +29,9 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-            # Clone the project if it doesn't exist
-            if [ ! -d "aldokan" ]; then
-              git clone git@github.com:AbdelazizMalfy/aldokan.git
-            fi
-        
-            # Change directory to project
-            cd aldokan || exit
-
+            export DB_USERNAME=${{ secrets.DB_USERNAME }}
+            export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            export DB_NAME=${{ secrets.DB_NAME }}
             # Pull the latest changes
             git pull origin main
 
