@@ -3,11 +3,11 @@ name: Continuous Deployment Workflow
 on:
   workflow_dispatch:
 
-defaults:
-  run:
-    shell: bash
-    # Define the working directory for all run steps in the workflow
-    working-directory: ./aldokan
+# defaults:
+#   run:
+#     shell: bash
+#     # Define the working directory for all run steps in the workflow
+#     working-directory: ./aldokan
 
 jobs:
 
@@ -36,6 +36,9 @@ jobs:
             # List files in the current directory
             echo "Listing files in the current directory:"
             ls -la
+
+            $ Change directory
+            cd aldokan/ || exit
 
             # Pull the latest changes
             git pull origin main
