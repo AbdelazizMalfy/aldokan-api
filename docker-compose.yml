@@ -1,7 +1,20 @@
 version: '3.8'
 services:
+  app:
+    build: .
+    ports:
+      - "9000:9000"
+    environment:
+      DB_HOST: db
+    depends_on:
+      - db 
+    networks:
+      - my-network
+
   db:
     image: postgres:14
+    volumes:
+      - pgdata:/var/lib/postgresql/data
     networks:
       - my-network
     ports:
@@ -14,3 +27,6 @@ services:
 networks:
   my-network:
     external: true
+
+volumes:
+  pgdata:

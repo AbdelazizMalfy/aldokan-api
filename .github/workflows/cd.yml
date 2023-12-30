@@ -1,0 +1,39 @@
+name: Continuous Deployment Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  deploy:
+    name: Deploy to Droplet
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploying to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            # Pull the latest changes
+            git pull origin main
+
+            # Start database and other services
+            docker-compose up
+
+            # Wait for the database to become ready
+            echo "Waiting for DB to be ready..."
+            sleep 30  # Adjust based on your DB startup time
+
+            # Run database migrations
+            echo "Running database migrations..."
+            docker-compose run app yarn migration:run
+
+            # Start the application
+            echo "Starting app..."
+            docker-compose up -d app

@@ -18,7 +18,7 @@ COPY . .
 RUN yarn build
 
 # Step 7: Application's port number
-# EXPOSE 3000
+EXPOSE 9000
 
 # Step 8: Define the Docker image's behavior at runtime
 CMD ["node", "dist/src/main"]
