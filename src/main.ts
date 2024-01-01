@@ -4,7 +4,12 @@ import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule, {
+    cors: {
+      origin: 'https://yourfrontenddomain.com',
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    },
+  });
   const config = app.get(ConfigService);
   app.setGlobalPrefix('api');
 
