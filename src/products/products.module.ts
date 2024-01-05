@@ -6,11 +6,13 @@ import { ProductsService } from './products.service';
 import { ProductEntity } from './entities/product.entity';
 import { ProductImageEntity } from './entities/product.image.entity';
 import { CategoriesModule } from 'src/categories/categorires.module';
+import { ErrorHandlingModule } from 'src/error.handling/error.handling.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([ProductEntity, ProductImageEntity]),
     CategoriesModule,
+    ErrorHandlingModule,
   ],
   controllers: [ProductsController],
   providers: [ProductsService],

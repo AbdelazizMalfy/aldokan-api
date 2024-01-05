@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppModules } from 'src/app.modules';
+import { SentryModule } from '@ntegral/nestjs-sentry';
 
 @Module({
   imports: [
@@ -20,6 +21,10 @@ import { AppModules } from 'src/app.modules';
         synchronize: config.get('DB_SYNCHRONIZE') === 'true', // Ensuring boolean value
       }),
       inject: [ConfigService],
+    }),
+    SentryModule.forRoot({
+      dsn: process.env.SENTRY_DSN,
+      debug: true,
     }),
     ...AppModules,
   ],

@@ -25,7 +25,7 @@ export class UserEntityConstraints1702912411854 implements MigrationInterface {
     );
     await queryRunner.query(`ALTER TABLE "user_entity" DROP COLUMN "password"`);
     await queryRunner.query(
-      `ALTER TABLE "user_entity" ADD "password" character varying(255) NOT NULL`,
+      `ALTER TABLE "user_entity" ADD "password" character varying(255)`,
     );
     await queryRunner.query(`ALTER TABLE "user_entity" DROP COLUMN "phone"`);
     await queryRunner.query(

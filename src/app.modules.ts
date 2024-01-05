@@ -5,6 +5,7 @@ import { UsersModule } from 'src/users/users.module';
 import { VouchersModule } from 'src/vouchers/vouchers.module';
 import { AuthModule } from './auth/auth.module';
 import { HealthzModule } from './healthz/healthz.module';
+import { ErrorHandlingModule } from './error.handling/error.handling.module';
 
 export const AppModules = [
   UsersModule,
@@ -14,4 +15,5 @@ export const AppModules = [
   VouchersModule,
   AuthModule,
   HealthzModule,
+  ErrorHandlingModule,
 ];

@@ -14,13 +14,18 @@ import { UpdateProductDto } from 'src/products/dto/update.product.dto';
 import { ProductEntity } from 'src/products/entities/product.entity';
 import { CategoriesService } from 'src/categories/categorires.service';
 import { ProductsService } from 'src/products/products.service';
+import { Logger } from '@nestjs/common';
+import { ErrorHandlingService } from 'src/error.handling/error.handling.service';
 
 @Controller('products')
 export class ProductsController {
   constructor(
     private readonly productsService: ProductsService,
     private readonly categoriesService: CategoriesService,
+    private errorHandlingService: ErrorHandlingService,
   ) {}
+
+  private readonly logger = new Logger(ProductsController.name);
 
   @Get()
   getProducts(): Promise<ProductEntity[]> {
@@ -31,20 +36,20 @@ export class ProductsController {
   async getProductById(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<ProductEntity> {
-    const product = await this.productsService.getProductById(id);
-
-    if (!product) {
+    try {
+      return await this.productsService.getProductById(id);
+    } catch (error) {
+      this.logger.error(`Product with ID ${id} not found.`);
+      this.errorHandlingService.reportErrorToSentry(error);
       throw new NotFoundException(`Product with ID ${id} not found.`);
     }
-
-    return product;
   }
 
   @Get('/category/:id')
-  getProductsByCategory(
+  async getProductsByCategory(
     @Param('id') categoryId: number,
   ): Promise<ProductEntity[]> {
-    return this.productsService.getProductsByCategory(categoryId);
+    return await this.productsService.getProductsByCategory(categoryId);
   }
 
   @Post()

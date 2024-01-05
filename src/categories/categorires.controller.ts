@@ -24,13 +24,14 @@ export class CategoriesController {
   async getCategoryById(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<CategoryEntity> {
-    const product = await this.categoriesService.getCategoryById(id);
+    const category = await this.categoriesService.getCategoryById(id);
 
-    if (!product) {
-      throw new NotFoundException(`Product with ID ${id} not found.`);
+    console.log('category');
+    if (!category) {
+      throw new NotFoundException(`Category with ID ${id} not found.`);
     }
 
-    return product;
+    return category;
   }
 
   //   @Get('/category/:id')
