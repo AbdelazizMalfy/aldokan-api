@@ -7,6 +7,7 @@ import { SuccessDto } from 'src/common/dto/success.dto';
 import { JwtPayloadWithRefreshToken } from './strategies/jwt.rt.strategy';
 import { GoogleUser } from './strategies/google.strategy';
 import { Tokens } from 'src/common/types/tokens';
+import { ConfigService } from '@nestjs/config';
 
 const mockAuthService = {
   signup: jest.fn(),
@@ -16,19 +17,36 @@ const mockAuthService = {
   validateOAuthLogin: jest.fn(),
 };
 
+const mockConfigService = {
+  get: jest.fn((key) => {
+    if (key === 'CLIENT_URL') return 'http://localhost:3000';
+    return null;
+  }),
+};
+
 describe('AuthController', () => {
   let controller: AuthController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
-      providers: [AuthService],
-    })
-      .overrideProvider(AuthService)
-      .useValue(mockAuthService)
-      .compile();
+      providers: [
+        {
+          provide: AuthService,
+          useValue: mockAuthService,
+        },
+        {
+          provide: ConfigService,
+          useValue: mockConfigService,
+        },
+      ],
+    }).compile();
 
     controller = module.get<AuthController>(AuthController);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {
@@ -109,21 +127,23 @@ describe('AuthController', () => {
   });
 
   describe('googleAuthRedirect', () => {
-    it('should return tokens after Google OAuth', async () => {
+    it('should redirect with tokens after Google OAuth', async () => {
+      const mockTokens = { access_token: 'access', refresh_token: 'refresh' };
       const user: GoogleUser = {
         firstName: 'firstName',
         lastName: 'lastName',
         email: 'user@example.com',
         picture: 'pictureUrl',
       };
-      const result: Tokens = {
-        access_token: 'access_token',
-        refresh_token: 'refresh_token',
-      };
+      const res = { redirect: jest.fn() };
+      mockAuthService.validateOAuthLogin.mockResolvedValue(mockTokens);
 
-      mockAuthService.validateOAuthLogin.mockResolvedValue(result);
-      expect(await controller.googleAuthRedirect(user)).toEqual(result);
+      await controller.googleAuthRedirect(user, res);
+
       expect(mockAuthService.validateOAuthLogin).toHaveBeenCalledWith(user);
+      expect(res.redirect).toHaveBeenCalledWith(
+        `http://localhost:3000/authenticated?accessToken=${mockTokens.access_token}&refreshToken=${mockTokens.refresh_token}`,
+      );
     });
   });
 });
