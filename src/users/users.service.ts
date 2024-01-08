@@ -16,6 +16,10 @@ export class UsersService {
     return this.usersRepository.save(user);
   }
 
+  async getUserById(id: number): Promise<UserEntity | undefined> {
+    return this.usersRepository.findOneByOrFail({ id });
+  }
+
   //   findAll() {
   //     return this.usersRepository.find();
   //   }

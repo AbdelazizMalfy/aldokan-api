@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Tokens } from 'src/common/types/tokens';
 import { RefreshTokenGuard } from 'src/common/guards/jwt.rt.guard';
@@ -11,10 +11,14 @@ import { SuccessDto } from 'src/common/dto/success.dto';
 import { JwtPayloadWithRefreshToken } from './strategies/jwt.rt.strategy';
 import { GoogleUser } from './strategies/google.strategy';
 import { AccessTokenGuard } from 'src/common/guards/jwt.guard';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly config: ConfigService,
+  ) {}
 
   @Post('/signup')
   async signUp(@Body() signupDto: SignupDto): Promise<Tokens> {
@@ -49,7 +53,15 @@ export class AuthController {
   @UseGuards(GoogleAuthGuard)
   async googleAuthRedirect(
     @GetCurrentUser() user: GoogleUser,
-  ): Promise<Tokens> {
-    return await this.authService.validateOAuthLogin(user);
+    @Res() res,
+  ): Promise<void> {
+    const tokens = await this.authService.validateOAuthLogin(user);
+
+    //TODO: Migrate to cookies for better security
+    res.redirect(
+      `${this.config.get<string>('CLIENT_URL')}/authenticated?accessToken=${
+        tokens.access_token
+      }&refreshToken=${tokens.refresh_token}`,
+    );
   }
 }
