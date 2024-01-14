@@ -10,6 +10,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { CategoriesService } from 'src/categories/categorires.service';
+import { CreateCategoryDto } from './dto/create.category.dto';
 
 @Controller('categories')
 export class CategoriesController {
@@ -43,7 +44,7 @@ export class CategoriesController {
 
   @Post()
   async addCategory(
-    @Body() category: { name: string },
+    @Body() category: CreateCategoryDto,
   ): Promise<CategoryEntity> {
     return this.categoriesService.createCategory(category);
   }

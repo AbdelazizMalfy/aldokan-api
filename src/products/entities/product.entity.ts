@@ -29,6 +29,9 @@ export class ProductEntity {
   @Column('int')
   stockQuantity: number;
 
+  @Column({ nullable: true })
+  image: string;
+
   @Column()
   unitType: string;
 

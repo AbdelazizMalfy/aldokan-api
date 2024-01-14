@@ -9,7 +9,9 @@ export class CategoryEntity {
   @Column({ unique: true })
   name: string;
 
-  // Relation with Product
+  @Column({ nullable: true })
+  image: string;
+
   @OneToMany(() => ProductEntity, (product) => product.category)
   products: ProductEntity[];
 }

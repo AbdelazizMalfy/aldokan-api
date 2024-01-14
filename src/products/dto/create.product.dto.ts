@@ -4,7 +4,9 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  IsUrl,
 } from 'class-validator';
+import { Column } from 'typeorm';
 
 enum UnitType {
   ITEM = 'item',
@@ -31,6 +33,12 @@ export class CreateProductDto {
   @IsNotEmpty()
   @IsNumber()
   readonly stockQuantity: number;
+
+  @Column({ nullable: true })
+  @IsOptional()
+  @IsString()
+  @IsUrl()
+  image: string;
 
   @IsNotEmpty()
   @IsEnum(UnitType)
