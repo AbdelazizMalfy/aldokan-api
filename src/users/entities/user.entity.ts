@@ -5,8 +5,10 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToOne,
 } from 'typeorm';
 import { OrderEntity } from '../../orders/entities/order.entity';
+import { CartEntity } from 'src/cart/entities/cart.entity';
 
 @Entity()
 export class UserEntity {
@@ -52,4 +54,7 @@ export class UserEntity {
 
   @OneToMany(() => OrderEntity, (order) => order.user)
   orders: OrderEntity[];
+
+  @OneToOne(() => CartEntity, (cart) => cart.user)
+  cart: CartEntity;
 }

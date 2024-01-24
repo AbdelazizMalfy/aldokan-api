@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppModules } from 'src/app.modules';
 import { SentryModule } from '@ntegral/nestjs-sentry';
+import { CartModule } from './cart/cart.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { SentryModule } from '@ntegral/nestjs-sentry';
       debug: true,
     }),
     ...AppModules,
+    CartModule,
   ],
 })
 export class AppModule {}
